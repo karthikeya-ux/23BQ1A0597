@@ -7,7 +7,7 @@ async function log(stack,level,packageName,message,token){
         message:message
     };
     try{
-        const response=await axios.post("https://4.224.186.213/evaluation-service/logs",data,{
+        const response=await axios.post("http://4.224.186.213/evaluation-service/logs",data,{
             headers:{
                 Authorization:`Bearer ${token}`
             }
@@ -16,7 +16,20 @@ async function log(stack,level,packageName,message,token){
         return response.data;
     }
     catch(error){
-        console.log("Error");
+
+    console.log("FULL ERROR");
+
+    if(error.response){
+        console.log(error.response.data);
+        console.log(error.response.status);
     }
+
+    console.log(error.message);
+
+    return {
+        error: true,
+        message: error.message
+    };
+}
 }
 module.exports = log;
